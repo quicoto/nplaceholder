@@ -18,6 +18,8 @@ var mimeTypes = {
 };
 
 http.createServer(function (request, response) {
+
+	// need to normalize   path.normalize ?
 	
 	if(request.url != '/favicon.ico'){
 	
