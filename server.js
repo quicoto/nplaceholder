@@ -20,7 +20,7 @@ var mimeTypes = {
 http.createServer(function (request, response) {
 
 	var url = path.normalize(request.url);
-	
+				    		
 	if(url != '/favicon.ico'){
 	
 		var urlString = url;
@@ -30,27 +30,11 @@ http.createServer(function (request, response) {
 		var user_width = new_array[1];
 		var user_height = new_array[2];
 			
-			
-		 
-		easyimg.info('./cat.jpg', function(err,stdout,stderr) {
-			  console.log('Next line should be unsupported error');
-			  console.log(err);
-		});
-		
 		var original_img = './cat.jpg';
-		 
-		/* easyimg.resize({src:original_img, dst:'./resize.jpg', width:user_width, height:user_height}, function(err, image) {
-			
-			console.log('Resized');
-			console.log(image);
-		});	*/
+
+		var rand_number = Math.floor((Math.random()*500000)+1);
 		
-		
-		var rand_number = Math.floor((Math.random()*500)+1);
-		
-		var dest_img = './cache/resize-' + rand_number + '.jpg';
-//		var dest_img = './resize.jpg';
-		fs.open(dest_img, 'w+', '0777');
+		var dest_img = './resize.jpg';
 
 		easyimg.rescrop(
 			{
@@ -64,18 +48,27 @@ http.createServer(function (request, response) {
 				if (err) throw err;
 				console.log('Resized and cropped');
 				console.log(image);
+				
+				var new_img =  './resize-' + rand_number + '.jpg';
+				
+				fs.renameSync(dest_img, new_img);
+				
+				var img = fs.readFileSync(new_img);	 
+			 
+			 	response.writeHead(200, {
+			 		'Cache-Control' : 'no-cache',
+			 		'Content-Type': 'image/gif' });
+			 	
+			 	console.log('------------------------');
+			 	console.log(new_img);
+			 		
+			    response.end(img, 'binary');		 		  
+						    	
+				fs.unlink(new_img);	 
+		
 			}
-		);		
-		
-		 var img = fs.readFileSync(dest_img);
-		
-	     response.writeHead(200, {'Content-Type': 'image/gif' });
-	     
-	      fs.unlink(dest_img);
-	     
-	     response.end(img, 'binary');   
-	     
+		);	
+			     
 	 }
-
       
 }).listen(8080);
