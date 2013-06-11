@@ -11,12 +11,6 @@ var fs = require('fs');
 var url = require('url');	
 var easyimg = require('easyimage');
 
-var mimeTypes = {
- '.js' : 'text/javascript',
- '.html': 'text/html',
- '.css' : 'text/css'
-};
-
 http.createServer(function (request, response) {
 
 	var url = path.normalize(request.url);
@@ -59,9 +53,6 @@ http.createServer(function (request, response) {
 			 		'Cache-Control' : 'no-cache',
 			 		'Content-Type': 'image/gif' });
 			 	
-			 	console.log('------------------------');
-			 	console.log(new_img);
-			 		
 			    response.end(img, 'binary');		 		  
 						    	
 				fs.unlink(new_img);	 
