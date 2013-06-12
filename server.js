@@ -28,7 +28,7 @@ http.createServer(function (request, response) {
 
 		var rand_number = Math.floor((Math.random()*500000)+1);
 		
-		var dest_img = './resize.jpg';
+		var dest_img = './resize-' + rand_number + '.jpg';
 
 		easyimg.rescrop(
 			{
@@ -43,11 +43,7 @@ http.createServer(function (request, response) {
 				console.log('Resized and cropped');
 				console.log(image);
 				
-				var new_img =  './resize-' + rand_number + '.jpg';
-				
-				fs.renameSync(dest_img, new_img);
-				
-				var img = fs.readFileSync(new_img);	 
+				var img = fs.readFileSync(dest_img);	 
 			 
 			 	response.writeHead(200, {
 			 		'Cache-Control' : 'no-cache',
@@ -55,7 +51,7 @@ http.createServer(function (request, response) {
 			 	
 			    response.end(img, 'binary');		 		  
 						    	
-				fs.unlink(new_img);	 
+				fs.unlink(dest_img);	 
 		
 			}
 		);	
