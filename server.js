@@ -23,8 +23,41 @@ http.createServer(function (request, response) {
 		
 		var user_width = new_array[1];
 		var user_height = new_array[2];
+		
+		/* What type of image do you want? */
+		
+		var type = new_array[3];
+		
+		var types = new Array();
+			types[0] = "cats";
+			types[1] = "people";
+			types[2] = "tech";
+			types[3] = "world";
+					
+		console.log(types.indexOf(type));
+		
+				
+		if( (type == '') || (type == undefined) || (types.indexOf(type) == -1) ){
+		
+			var math = Math.floor((Math.random()*types.length));
 			
-		var original_img = './cat.jpg';
+			console.log(math);
+			
+			 type = types[math];		 
+			 
+		}
+		
+		console.log(type);
+		
+		/* Random */ 
+		
+		var max_items = 5;
+		
+		var folder = './' + type + '/';
+		
+		var original_img = folder + Math.floor((Math.random()*max_items)+1) + '.jpg';
+			
+//		var original_img = './cat.jpg';
 
 		var rand_number = Math.floor((Math.random()*500000)+1);
 		
